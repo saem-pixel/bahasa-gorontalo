@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>BAHASA GORONTALO – Platform Belajar Bahasa dan Budaya Gorontalo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/tailwind.config.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-purple-200 selection:text-purple-900 overflow-x-hidden">
+
+  <!-- Strip Atas Warna Adat Tilabataila -->
+  <div class="h-1.5 w-full karawo-border sticky top-0 z-50"></div>
+
+  <!-- HEADER & NAVIGASI UTAMA -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-1.5 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-15 sm:h-16">
+        <!-- Logo & Brand -->
+        <button onclick="navigate('home')" class="flex items-center gap-2 sm:gap-3 text-left group focus:outline-none shrink-0">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl karawo-pattern flex items-center justify-center shadow-md border border-amber-400/50 group-hover:scale-105 transition shrink-0">
+            <!-- Ikon Motif Karawo + Puncak Dulohupa -->
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2L3 9h18L12 2z" fill="rgba(245,158,11,0.25)"/>
+              <path d="M5 9v10h14V9"/>
+              <path d="M9 19v-6h6v6"/>
+              <circle cx="12" cy="6" r="1" fill="#fff"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-display font-extrabold text-sm sm:text-base lg:text-lg tracking-tight bg-gradient-to-r from-purple-800 via-red-600 to-amber-600 bg-clip-text text-transparent block leading-tight">
+              BAHASA GORONTALO
+            </span>
+            <span class="text-[10px] sm:text-[11px] font-medium text-slate-500 tracking-tight sm:tracking-wide hidden xs:block" data-i18n="tagline">
+              Platform Belajar Bahasa & Budaya
+            </span>
+          </div>
+        </button>
+
+        <!-- Navigasi Desktop (Laptop & Layar Lebar) -->
+        <nav class="hidden lg:flex items-center gap-0.5 xl:gap-1" id="desktop-nav">
+          <button onclick="navigate('home')" data-nav="home" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Beranda</button>
+          <button onclick="navigate('profil')" data-nav="profil" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Profil</button>
+          <button onclick="navigate('sejarah')" data-nav="sejarah" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Sejarah</button>
+          <button onclick="navigate('kamus')" data-nav="kamus" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Kamus</button>
+          <button onclick="navigate('materi')" data-nav="materi" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Materi</button>
+          <button onclick="navigate('percakapan')" data-nav="percakapan" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Percakapan</button>
+          <button onclick="navigate('tutor')" data-nav="tutor" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Tutor</button>
+          <button onclick="navigate('kuis')" data-nav="kuis" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Kuis</button>
+          <button onclick="navigate('game')" data-nav="game" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Game</button>
+          <button onclick="navigate('budaya')" data-nav="budaya" class="nav-btn px-2.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition">Budaya</button>
+        </nav>
+
+        <!-- Kontrol Kanan: Pengalih Bahasa UI (ID/EN), XP Badge, Profil, Menu Mobile/Tablet -->
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <!-- Pengalih Bahasa Antarmuka (Indonesia / English) -->
+          <button onclick="toggleUILang()" title="Ganti Bahasa Antarmuka (ID / EN)" class="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition">
+            <span id="ui-lang-flag">🇮🇩</span>
+            <span id="ui-lang-label" class="font-bold">ID</span>
+          </button>
+
+          <!-- Indikator Poin XP -->
+          <div class="hidden sm:flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold">
+            <span>⭐</span>
+            <span id="header-xp">0 XP</span>
+          </div>
+
+          <!-- Tombol Akun Pengguna -->
+          <button onclick="navigate('akun')" data-nav="akun" class="nav-btn flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition">
+            <span id="header-avatar">🧑🏽‍🎓</span>
+            <span id="header-username" class="hidden sm:inline max-w-[80px] truncate">Pelajar</span>
+          </button>
+
+          <!-- Tombol Hamburger Mobile/Tablet -->
+          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none transition" aria-label="Buka Menu Navigasi">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Navigasi Mobile & Tablet -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white/98 backdrop-blur-md border-t border-slate-200 px-3 sm:px-6 pt-3 pb-5 shadow-xl transition-all">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+        <button onclick="navigate('home'); toggleMobileMenu()" data-nav="home" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🏠</span> Beranda</button>
+        <button onclick="navigate('profil'); toggleMobileMenu()" data-nav="profil" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🗺️</span> Profil Daerah</button>
+        <button onclick="navigate('sejarah'); toggleMobileMenu()" data-nav="sejarah" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>📜</span> Sejarah Bahasa</button>
+        <button onclick="navigate('kamus'); toggleMobileMenu()" data-nav="kamus" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>📖</span> Kamus Digital</button>
+        <button onclick="navigate('materi'); toggleMobileMenu()" data-nav="materi" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🎓</span> Materi Belajar</button>
+        <button onclick="navigate('percakapan'); toggleMobileMenu()" data-nav="percakapan" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🗣️</span> Percakapan</button>
+        <button onclick="navigate('tutor'); toggleMobileMenu()" data-nav="tutor" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🤖</span> Tutor Digital</button>
+        <button onclick="navigate('kuis'); toggleMobileMenu()" data-nav="kuis" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>📝</span> Kuis Interaktif</button>
+        <button onclick="navigate('game'); toggleMobileMenu()" data-nav="game" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🎮</span> Game Edukasi</button>
+        <button onclick="navigate('budaya'); toggleMobileMenu()" data-nav="budaya" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>🏛️</span> Budaya</button>
+        <button onclick="navigate('akun'); toggleMobileMenu()" data-nav="akun" class="nav-btn text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2"><span>👤</span> Profil Saya</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PEMUTAR AUDIO & AVATAR PENUTUR MENGAMBANG (GLOBAL SPEAKING BAR) -->
+  <div id="global-speaker-bar" class="fixed bottom-20 md:bottom-4 right-3 sm:right-4 z-50 hidden max-w-sm w-[calc(100%-1.5rem)] sm:w-auto bg-white border-2 border-purple-600 rounded-2xl shadow-2xl p-3 sm:p-3.5 transition-all">
+    <div class="flex items-center gap-3">
+      <!-- Karakter Orang Berbicara -->
+      <div id="global-speaker-avatar" class="avatar-speaking relative w-14 h-14 rounded-full bg-gradient-to-br from-purple-700 to-indigo-900 flex items-center justify-center shrink-0 border-2 border-amber-400">
+        <div class="wave-ring absolute inset-0 rounded-full border-2 border-amber-400"></div>
+        <div class="wave-ring-delay absolute inset-0 rounded-full border-2 border-purple-400"></div>
+        <!-- Wajah Penutur Gorontalo Berpeci Upia Karanji -->
+        <svg class="w-11 h-11" viewBox="0 0 64 64">
+          <!-- Bahu / Baju Adat Karawo -->
+          <path d="M12 60 C12 46, 52 46, 52 60 Z" fill="#5B21B6"/>
+          <path d="M26 48 L32 56 L38 48" fill="#F59E0B"/>
+          <!-- Kepala -->
+          <circle cx="32" cy="30" r="14" fill="#F1C27D"/>
+          <!-- Peci Upia Karanji -->
+          <path d="M18 24 C18 13, 46 13, 46 24 Z" fill="#78350F"/>
+          <path d="M18 22 H46" stroke="#F59E0B" stroke-width="2"/>
+          <!-- Mata -->
+          <circle cx="27" cy="28" r="1.8" fill="#1E293B"/>
+          <circle cx="37" cy="28" r="1.8" fill="#1E293B"/>
+          <!-- Mulut Bergerak -->
+          <ellipse class="mouth-anim" cx="32" cy="36" rx="4.5" ry="3" fill="#991B1B"/>
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-purple-700" id="speaker-lang-badge">Pelafalan Gorontalo</span>
+          <button onclick="stopSpeaking()" class="text-slate-400 hover:text-red-600 text-xs font-bold px-1.5">✕</button>
+        </div>
+        <p id="speaker-text-preview" class="text-sm font-bold text-slate-900 truncate mt-0.5">Wolo habari?</p>
+        <p id="speaker-sub-preview" class="text-xs text-slate-500 truncate">Apa kabar? / How are you?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFIKASI PENGGANTI ALERT() -->
+  <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- KONTEN UTAMA (SINGLE PAGE APPLICATION SECTIONS) -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 min-h-[calc(100vh-140px)] space-y-8 sm:space-y-12 pb-24 md:pb-8">
+
+    <!-- ========================================================= -->
+    <!-- 1. HALAMAN BERANDA (HOME)                                 -->
+    <!-- ========================================================= -->
+    <section id="page-home" class="page-section space-y-8 sm:space-y-10">
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-3xl karawo-pattern text-white shadow-xl border border-purple-800">
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-950/95 via-purple-950/85 to-transparent"></div>
+        <div class="relative z-10 grid lg:grid-cols-12 gap-6 sm:gap-8 p-5 sm:p-8 lg:p-12 items-center">
+          <div class="lg:col-span-7 space-y-4 sm:space-y-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold">
+              <span>🏛️ Hulontalo Lipu'u • Trilingual (ID • GOR • EN)</span>
+            </div>
+            <h1 class="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight" data-i18n="heroTitle">
+              Mari Belajar Bahasa Gorontalo
+            </h1>
+            <p class="text-slate-200 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl" data-i18n="heroDesc">
+              Bahasa daerah adalah jati diri, jembatan sejarah, dan warisan leluhur yang tak ternilai. Mari lestarikan <strong>Bahasa Hulontalo</strong> melalui pembelajaran interaktif dari Bahasa Indonesia dan Bahasa Inggris dengan pelafalan penutur langsung.
+            </p>
+            <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 pt-1 sm:pt-2">
+              <button onclick="navigate('materi')" class="w-full sm:w-auto justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm sm:text-base shadow-lg shadow-amber-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                <span>🚀</span>
+                <span data-i18n="startLearning">Mulai Belajar</span>
+              </button>
+              <button onclick="navigate('kamus')" class="w-full sm:w-auto justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/25 text-white font-semibold text-sm sm:text-base transition flex items-center gap-2">
+                <span>📖</span>
+                <span data-i18n="openDict">Buka Kamus Digital</span>
+              </button>
+              <button onclick="speakText('Assalamu alaikum, wolo habari? Mari belajar Bahasa Gorontalo!', 'gor', 'Assalamu\'alaikum, wolo habari?', 'Apa kabar? / How are you?')" class="w-full sm:w-auto justify-center px-4 py-3 sm:py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition flex items-center gap-2">
+                <span>🔊</span>
+                <span>Dengar Sapaan</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Foto Budaya Gorontalo (Rumah Adat Dulohupa) -->
+          <div class="lg:col-span-5 flex justify-center w-full">
+            <div class="relative w-full max-w-sm sm:max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/20 shadow-2xl float-slow group">
+              <div class="relative rounded-xl overflow-hidden shadow-lg border border-amber-300/30">
+                <img src="images/dulohupa.jpg" alt="Rumah Adat Dulohupa Gorontalo" class="w-full h-52 sm:h-64 lg:h-72 object-cover object-center group-hover:scale-105 transition duration-500" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/20 to-transparent pointer-events-none"></div>
+                <div class="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-slate-900/80 backdrop-blur-md border border-amber-400/40 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-amber-300 shadow">
+                  🏛️ Bele Dulohupa
+                </div>
+                <div class="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 text-white pointer-events-none">
+                  <p class="font-display font-extrabold text-sm sm:text-base tracking-tight text-white drop-shadow">Rumah Adat Dulohupa</p>
+                  <p class="text-[11px] sm:text-xs text-amber-200 drop-shadow">Rumah Adat Khas Gorontalo • Tempat Musyawarah Mufakat</p>
+                </div>
+              </div>
+              <div class="mt-2.5 sm:mt-3 flex items-center justify-between text-[11px] sm:text-xs text-amber-200 px-1">
+                <span>✨ Bele Dulohupa (Rumah Adat)</span>
+                <span>📍 Kota Gorontalo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistik Platform -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0">📚</div>
+          <div>
+            <div class="text-xl sm:text-2xl font-extrabold text-slate-900" id="stat-vocab-count">65+</div>
+            <div class="text-[11px] sm:text-xs font-medium text-slate-500">Kosakata Terverifikasi</div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0">🎓</div>
+          <div>
+            <div class="text-xl sm:text-2xl font-extrabold text-slate-900">16 Bab</div>
+            <div class="text-[11px] sm:text-xs font-medium text-slate-500">Materi 3 Tingkatan</div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0">🗣️</div>
+          <div>
+            <div class="text-xl sm:text-2xl font-extrabold text-slate-900">7 Situasi</div>
+            <div class="text-[11px] sm:text-xs font-medium text-slate-500">Dialog + Penutur Suara</div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200 shadow-sm flex items-center gap-3 sm:gap-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0">🎮</div>
+          <div>
+            <div class="text-xl sm:text-2xl font-extrabold text-slate-900">6 Game</div>
+            <div class="text-[11px] sm:text-xs font-medium text-slate-500">Kuis & Permainan Edukasi</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Motivasi Belajar Harian -->
+      <div class="bg-gradient-to-r from-amber-50 via-purple-50 to-emerald-50 border border-amber-200/80 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-2xl shrink-0 shadow">💡</div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Motivasi Bahasa & Falsafah Hari Ini</span>
+            <h3 id="daily-quote-gor" class="font-display font-bold text-lg text-slate-900 mt-0.5">"Aadati hula-hula'a to syara'a, syara'a hula-hula'a to Kitabullah."</h3>
+            <p id="daily-quote-trans" class="text-sm text-slate-600 mt-1">
+              <strong>ID:</strong> Adat bersendikan syarak, syarak bersendikan Kitabullah. &bull; <strong>EN:</strong> Custom is based on religious law, and religious law is based on the Holy Scripture.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="speakDailyQuote()" class="px-4 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-semibold flex items-center gap-1.5 transition">
+            <span>🔊</span> Lafalkan
+          </button>
+          <button onclick="nextDailyQuote()" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 text-xs font-semibold transition">
+            Ganti Kutipan ↻
+          </button>
+        </div>
+      </div>
+
+      <!-- Ringkasan Fitur Utama -->
+      <div>
+        <div class="text-center max-w-2xl mx-auto mb-6">
+          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Fitur Pembelajaran Lengkap</h2>
+          <p class="text-slate-600 text-sm sm:text-base mt-2">Dirancang untuk pelajar, mahasiswa, wisatawan, dan masyarakat umum dalam tiga bahasa (Indonesia, Gorontalo, Inggris).</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div onclick="navigate('kamus')" class="cursor-pointer group bg-white hover:border-purple-400 border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+            <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">📖</div>
+            <h3 class="font-bold text-slate-900">Kamus Digital 3 Bahasa</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">Pencarian real-time ID–GOR–EN, status verifikasi penutur asli, contoh kalimat, dan audio.</p>
+          </div>
+          <div onclick="navigate('percakapan')" class="cursor-pointer group bg-white hover:border-emerald-400 border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+            <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">🗣️</div>
+            <h3 class="font-bold text-slate-900">Percakapan & Penutur</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">Dialog situasional dengan ilustrasi orang berbicara, bedah kosakata, dan latihan pengucapan.</p>
+          </div>
+          <div onclick="navigate('tutor')" class="cursor-pointer group bg-white hover:border-amber-400 border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+            <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">🤖</div>
+            <h3 class="font-bold text-slate-900">Tutor Digital Interaktif</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">Tanya arti kata, terjemahkan kalimat, dan koreksi latihan dengan tanda verifikasi yang jujur.</p>
+          </div>
+          <div onclick="navigate('game')" class="cursor-pointer group bg-white hover:border-rose-400 border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+            <div class="w-11 h-11 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">🎮</div>
+            <h3 class="font-bold text-slate-900">Kuis & Game Edukasi</h3>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">Tebak kata, memory card, susun kalimat, lencana prestasi, dan papan peringkat XP.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 2. HALAMAN PROFIL GORONTALO                               -->
+    <!-- ========================================================= -->
+    <section id="page-profil" class="page-section hidden space-y-8">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">Bumi Serambi Madinah • Hulontalo</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Profil Provinsi & Bahasa Gorontalo</h2>
+        <p class="text-slate-600 mt-2 leading-relaxed">
+          Provinsi Gorontalo terletak di bagian utara Pulau Sulawesi dan resmi berdiri sebagai provinsi ke-32 di Indonesia pada 5 Desember 2000. Dikenal dengan julukan <strong>"Bumi Serambi Madinah"</strong>, Gorontalo memadukan kearifan adat istiadat yang luhur dengan nilai-nilai religius yang kuat.
+        </p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl mb-2">🗺️</div>
+            <h3 class="font-bold text-slate-900">Letak Geografis</h3>
+            <p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Berada di semenanjung utara Sulawesi (0°19'–1°15' LU dan 121°23'–123°43' BT). Diapit oleh Laut Sulawesi di utara dan Teluk Tomini di selatan, dengan 5 kabupaten dan 1 kota.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl mb-2">👥</div>
+            <h3 class="font-bold text-slate-900">Identitas Masyarakat</h3>
+            <p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Masyarakat Gorontalo (<em>Tau Hulontalo</em>) menjunjung tinggi kekerabatan, musyawarah (<em>Dulohupa</em>), dan gotong royong (<em>Huyula</em>). Pakaian adatnya didominasi empat warna sakral <em>Tilabataila</em>.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl mb-2">🗣️</div>
+            <h3 class="font-bold text-slate-900">Ragam Bahasa Daerah</h3>
+            <p class="text-sm text-slate-600 mt-1.5 leading-relaxed">Selain <strong>Bahasa Gorontalo (Hulontalo)</strong> sebagai lingua franca utama, terdapat juga Bahasa Suwawa (Bune), Bahasa Atinggola, dan Bahasa Bolango.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keunikan Bahasa & Falsafah Hidup -->
+      <div class="grid lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <h3 class="font-display text-xl font-extrabold text-purple-900">✨ Keunikan Linguistik Bahasa Gorontalo</h3>
+          <ul class="space-y-3 text-sm text-slate-700">
+            <li class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center shrink-0 text-xs">1</span>
+              <span><strong>Suku Kata Terbuka (Vokal Akhir):</strong> Hampir seluruh kata dalam Bahasa Gorontalo berakhir dengan huruf vokal (<em>a, i, u, e, o</em>), misalnya <em>Bele</em> (rumah), <em>Taluhu</em> (air), <em>Mongaa</em> (makan).</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center shrink-0 text-xs">2</span>
+              <span><strong>Hentian Glotal (Tanda Petik '):</strong> Memiliki fonem glotal stop yang membedakan arti kata, seperti <em>Da'a</em> (besar) dan <em>Odu'olo</em> (terima kasih).</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center shrink-0 text-xs">3</span>
+              <span><strong>Tingkatan Kesantunan:</strong> Penggunaan pronomina seperti <em>Watiya</em> (saya, halus/formal) dibanding <em>Wau</em> (aku, akrab) menunjukkan penghormatan kepada lawan bicara.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <h3 class="font-display text-xl font-extrabold text-amber-800">🧭 Nilai-Nilai Kehidupan Masyarakat Gorontalo</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200">
+              <h4 class="font-bold text-amber-900">Huyula</h4>
+              <p class="text-xs text-slate-600 mt-1">Semangat gotong royong dan tolong-menolong tanpa pamrih dalam kehidupan bermasyarakat.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200">
+              <h4 class="font-bold text-purple-900">Dulohupa</h4>
+              <p class="text-xs text-slate-600 mt-1">Budaya bermusyawarah untuk mencapai mufakat demi kepentingan bersama.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
+              <h4 class="font-bold text-emerald-900">Mopomulo</h4>
+              <p class="text-xs text-slate-600 mt-1">Kebiasaan menanam kebaikan dan menjaga kelestarian alam untuk generasi mendatang.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200">
+              <h4 class="font-bold text-rose-900">Lo'iya Lo Tau</h4>
+              <p class="text-xs text-slate-600 mt-1">Menjaga tutur kata agar selalu santun, jujur, dan tidak menyakiti perasaan sesama.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 3. HALAMAN SEJARAH BAHASA GORONTALO                       -->
+    <!-- ========================================================= -->
+    <section id="page-sejarah" class="page-section hidden space-y-8">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">Jejak Linguistik & Peradaban</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">Sejarah & Perkembangan Bahasa Gorontalo</h2>
+        <p class="text-slate-600 mt-2 leading-relaxed">
+          Secara genealogis, Bahasa Gorontalo termasuk dalam <strong>rumpun bahasa Austronesia</strong> (sub-kelompok Filipina–Gorontalo–Mongondow). Bahasa ini tumbuh bersama peradaban kerajaan-kerajaan lokal di Jazirah Utara Sulawesi.
+        </p>
+
+        <!-- Garis Waktu (Timeline) Interaktif -->
+        <div class="mt-8 relative border-l-4 border-purple-600 ml-3 sm:ml-6 space-y-8 pl-6 sm:pl-8">
+          <div class="relative">
+            <span class="absolute -left-[34px] sm:-left-[42px] top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></span>
+            <span class="text-xs font-bold text-purple-700 uppercase">Abad ke-14 – ke-16 • Era U Duluwo Limo Lo Pohala'a</span>
+            <h3 class="font-bold text-lg text-slate-900 mt-0.5">Masa Kerajaan & Persekutuan Lima Negeri</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+              Bahasa Gorontalo menjadi bahasa pemerintahan, hukum adat, dan sastra lisan (<em>Tuja'i</em>, <em>Palebohu</em>, dan <em>Tinilo</em>) di persekutuan lima kerajaan: Gorontalo, Limboto, Suwawa, Bolango, dan Atinggola.
+            </p>
+          </div>
+
+          <div class="relative">
+            <span class="absolute -left-[34px] sm:-left-[42px] top-1 w-5 h-5 rounded-full bg-amber-500 border-4 border-white shadow"></span>
+            <span class="text-xs font-bold text-amber-700 uppercase">Abad ke-16 – ke-17 • Masuknya Islam & Aksara Arab-Melayu</span>
+            <h3 class="font-bold text-lg text-slate-900 mt-0.5">Pengayaan Kosakata & Falsafah Adat</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+              Masuknya ajaran Islam pada masa Raja Amai memperkaya kosakata Bahasa Gorontalo dengan serapan Bahasa Arab dan Melayu, melahirkan prinsip <em>"Aadati hula-hula'a to syara'a, syara'a hula-hula'a to Kitabullah"</em>.
+            </p>
+          </div>
+
+          <div class="relative">
+            <span class="absolute -left-[34px] sm:-left-[42px] top-1 w-5 h-5 rounded-full bg-red-600 border-4 border-white shadow"></span>
+            <span class="text-xs font-bold text-red-700 uppercase">Abad ke-19 – ke-20 • Dokumentasi Linguistik & Era Kemerdekaan</span>
+            <h3 class="font-bold text-lg text-slate-900 mt-0.5">Kodifikasi Ejaan Latin & Kamus Pertama</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+              Para peneliti bahasa dan budayawan lokal (seperti Mansoer Pateda) menyusun kamus besar Bahasa Gorontalo–Indonesia serta membakukan ejaan Latin agar mudah dipelajari di sekolah.
+            </p>
+          </div>
+
+          <div class="relative">
+            <span class="absolute -left-[34px] sm:-left-[42px] top-1 w-5 h-5 rounded-full bg-emerald-600 border-4 border-white shadow"></span>
+            <span class="text-xs font-bold text-emerald-700 uppercase">Tahun 2000 – Sekarang • Era Provinsi & Revitalisasi Digital</span>
+            <h3 class="font-bold text-lg text-slate-900 mt-0.5">Pelestarian untuk Generasi Muda</h3>
+            <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+              Sejak terbentuknya Provinsi Gorontalo, bahasa daerah diajarkan dalam muatan lokal sekolah, festival budaya, serta didigitalisasi ke dalam platform pembelajaran modern agar tetap hidup di kalangan generasi Z dan Alfa.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tantangan & Solusi Era Digital -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-6">
+          <h3 class="font-bold text-rose-900 text-lg">⚠️ Tantangan Pelestarian di Era Digital</h3>
+          <ul class="mt-3 space-y-2 text-sm text-rose-950/80 list-disc pl-5">
+            <li>Berkurangnya penutur aktif di kalangan anak muda perkotaan akibat dominasi bahasa gaul dan bahasa asing.</li>
+            <li>Minimnya konten edukasi digital interaktif yang dilengkapi pelafalan suara penutur asli.</li>
+            <li>Kosakata klasik dalam sastra lisan (<em>Tuja'i</em>) mulai jarang dipahami makna filosofisnya.</li>
+          </ul>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
+          <h3 class="font-bold text-emerald-900 text-lg">🌱 Peran Generasi Muda & Teknologi</h3>
+          <ul class="mt-3 space-y-2 text-sm text-emerald-950/80 list-disc pl-5">
+            <li>Membiasakan sapaan Bahasa Gorontalo di rumah, kampus, dan media sosial.</li>
+            <li>Memanfaatkan kamus digital, kuis interaktif, dan audio pelafalan untuk belajar mandiri.</li>
+            <li>Mendokumentasikan kosakata terverifikasi bersama budayawan dan penutur asli Gorontalo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 4. HALAMAN KAMUS DIGITAL (ID - GORONTALO - EN)            -->
+    <!-- ========================================================= -->
+    <section id="page-kamus" class="page-section hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">Kamus Trilingual Terverifikasi</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Kamus Digital Indonesia – Gorontalo – Inggris</h2>
+            <p class="text-sm text-slate-600 mt-1">Cari kosakata, dengarkan pelafalan dengan penutur suara, lihat contoh kalimat, dan simpan ke favorit.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="toggleFavOnlyFilter()" id="btn-fav-filter" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 hover:bg-amber-50 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition">
+              <span>⭐</span> Favorit Saya (<span id="fav-count-badge">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <!-- Bar Pencarian & Arah Terjemahan -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-3">
+          <div class="sm:col-span-2 md:col-span-6 relative">
+            <input type="text" id="dict-search-input" oninput="renderDictionary()" placeholder="Ketik kata (misal: Makan, Mongaa, Eat, Air, Bele)..." class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none text-sm" />
+            <span class="absolute left-3.5 top-3.5 text-slate-400">🔍</span>
+          </div>
+          <div class="sm:col-span-1 md:col-span-3">
+            <select id="dict-direction" onchange="renderDictionary()" class="w-full px-3.5 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:border-purple-600 outline-none">
+              <option value="all">Semua Arah (ID ↔ GOR ↔ EN)</option>
+              <option value="id-gor">Indonesia → Gorontalo</option>
+              <option value="gor-id">Gorontalo → Indonesia</option>
+              <option value="en-gor">English → Gorontalo</option>
+            </select>
+          </div>
+          <div class="sm:col-span-1 md:col-span-3">
+            <select id="dict-category" onchange="renderDictionary()" class="w-full px-3.5 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:border-purple-600 outline-none">
+              <option value="all">Semua Kategori</option>
+              <option value="Kata Kerja">Kata Kerja (Verb)</option>
+              <option value="Kata Benda">Kata Benda (Noun)</option>
+              <option value="Kata Sifat">Kata Sifat (Adjective)</option>
+              <option value="Sapaan">Sapaan & Ganti Orang</option>
+              <option value="Sehari-hari">Kata Sehari-hari & Angka</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Alfabet A-Z -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-2 pt-1 no-scrollbar sm:flex-wrap" id="alphabet-filter-bar">
+          <!-- Diisi via JS -->
+        </div>
+      </div>
+
+      <!-- Hasil Kamus -->
+      <div id="dictionary-results" class="grid md:grid-cols-2 gap-4">
+        <!-- Kartu Kosakata Dirender via JS -->
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 5. HALAMAN MATERI PEMBELAJARAN BERTINGKAT                 -->
+    <!-- ========================================================= -->
+    <section id="page-materi" class="page-section hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">Kurikulum Terstruktur</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Materi Pembelajaran Bertingkat</h2>
+        <p class="text-sm text-slate-600 mt-1">Pelajari Bahasa Gorontalo secara bertahap dari dasar hingga mahir lengkap dengan penjelasan, contoh 3 bahasa, audio, dan latihan.</p>
+
+        <!-- Tab Level -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-5">
+          <button onclick="selectCourseLevel('pemula')" id="tab-level-pemula" class="level-tab px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition bg-purple-700 text-white shadow text-center">
+            🌱 Level Pemula (7 Bab)
+          </button>
+          <button onclick="selectCourseLevel('menengah')" id="tab-level-menengah" class="level-tab px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition bg-slate-100 text-slate-700 hover:bg-slate-200 text-center">
+            🌿 Level Menengah (5 Bab)
+          </button>
+          <button onclick="selectCourseLevel('lanjutan')" id="tab-level-lanjutan" class="level-tab px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition bg-slate-100 text-slate-700 hover:bg-slate-200 text-center">
+            🌳 Level Lanjutan (4 Bab)
+          </button>
+        </div>
+      </div>
+
+      <!-- Daftar Bab & Detail Materi -->
+      <div class="grid lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-4 space-y-2.5" id="course-chapter-list">
+          <!-- Daftar bab dirender via JS -->
+        </div>
+        <div class="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm" id="course-chapter-detail">
+          <!-- Detail bab & latihan mini dirender via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 6. HALAMAN FITUR PERCAKAPAN (DIALOG + ORANG BERBICARA)     -->
+    <!-- ========================================================= -->
+    <section id="page-percakapan" class="page-section hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold">Simulasi Penutur Asli</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Percakapan Bahasa Gorontalo</h2>
+            <p class="text-sm text-slate-600 mt-1">Pilih situasi percakapan, dengarkan kedua penutur berbicara secara bergantian, dan pelajari kosakata kuncinya.</p>
+          </div>
+          <button onclick="playFullConversation()" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow flex items-center gap-2 shrink-0 transition">
+            <span>▶️</span> Putar Seluruh Dialog
+          </button>
+        </div>
+
+        <!-- Pilihan Situasi -->
+        <div class="flex flex-wrap gap-2 mt-5" id="conversation-situations">
+          <!-- Tombol situasi dirender via JS -->
+        </div>
+      </div>
+
+      <!-- Panggung Percakapan dengan 2 Karakter Orang Berbicara -->
+      <div class="grid lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6">
+          <!-- Visual 2 Orang Berbicara -->
+          <div class="bg-gradient-to-r from-purple-50 via-amber-50 to-emerald-50 rounded-2xl p-3 sm:p-5 border border-slate-200 flex items-center justify-between sm:justify-around gap-1 sm:gap-4">
+            <!-- Penutur A (Uti / Putra Gorontalo) -->
+            <div id="speaker-A-box" class="flex flex-col items-center text-center transition-all p-1.5 sm:p-2 rounded-xl shrink-0">
+              <div class="relative w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-purple-800 flex items-center justify-center border-2 sm:border-4 border-amber-400 shadow-md">
+                <div class="wave-ring absolute inset-0 rounded-full border-2 border-purple-500 opacity-0"></div>
+                <svg class="w-11 h-11 sm:w-16 sm:h-16" viewBox="0 0 64 64">
+                  <path d="M12 62 C12 46, 52 46, 52 62 Z" fill="#4C1D95"/>
+                  <circle cx="32" cy="30" r="14" fill="#F1C27D"/>
+                  <path d="M18 24 C18 13, 46 13, 46 24 Z" fill="#78350F"/>
+                  <circle cx="27" cy="28" r="1.8" fill="#1E293B"/>
+                  <circle cx="37" cy="28" r="1.8" fill="#1E293B"/>
+                  <ellipse class="mouth-anim" cx="32" cy="36" rx="4.5" ry="2.5" fill="#991B1B"/>
+                </svg>
+              </div>
+              <span class="font-bold text-[11px] sm:text-xs text-slate-900 mt-1.5 sm:mt-2" id="speaker-A-name">Uti (Penutur 1)</span>
+              <span class="text-[10px] sm:text-[11px] text-purple-700 font-medium" id="speaker-A-status">Siap berbicara</span>
+            </div>
+
+            <div class="text-center px-1 sm:px-2 min-w-0">
+              <span class="text-xl sm:text-2xl">💬</span>
+              <p class="text-[10px] sm:text-[11px] font-bold text-slate-500 mt-0.5 sm:mt-1 truncate max-w-[100px] sm:max-w-none" id="conv-active-title">Perkenalan Diri</p>
+            </div>
+
+            <!-- Penutur B (No'u / Putri Gorontalo) -->
+            <div id="speaker-B-box" class="flex flex-col items-center text-center transition-all p-1.5 sm:p-2 rounded-xl shrink-0">
+              <div class="relative w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-rose-700 flex items-center justify-center border-2 sm:border-4 border-amber-400 shadow-md">
+                <div class="wave-ring absolute inset-0 rounded-full border-2 border-rose-500 opacity-0"></div>
+                <svg class="w-11 h-11 sm:w-16 sm:h-16" viewBox="0 0 64 64">
+                  <path d="M12 62 C12 46, 52 46, 52 62 Z" fill="#BE123C"/>
+                  <!-- Kerudung / Sanggul Adat -->
+                  <circle cx="32" cy="30" r="16" fill="#F59E0B"/>
+                  <circle cx="32" cy="30" r="13.5" fill="#F1C27D"/>
+                  <path d="M19 25 Q32 16 45 25" fill="#1E293B"/>
+                  <circle cx="27" cy="29" r="1.8" fill="#1E293B"/>
+                  <circle cx="37" cy="29" r="1.8" fill="#1E293B"/>
+                  <ellipse class="mouth-anim" cx="32" cy="36.5" rx="4.5" ry="2.5" fill="#991B1B"/>
+                </svg>
+              </div>
+              <span class="font-bold text-[11px] sm:text-xs text-slate-900 mt-1.5 sm:mt-2" id="speaker-B-name">No'u (Penutur 2)</span>
+              <span class="text-[10px] sm:text-[11px] text-rose-700 font-medium" id="speaker-B-status">Siap berbicara</span>
+            </div>
+          </div>
+
+          <!-- Balon Percakapan -->
+          <div id="conversation-bubbles" class="space-y-4">
+            <!-- Baris dialog dirender via JS -->
+          </div>
+        </div>
+
+        <!-- Panel Kosakata Penting & Latihan Mengulang -->
+        <div class="lg:col-span-4 space-y-5">
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <span>🔑</span> Kosakata Penting Dialog
+            </h3>
+            <div id="conversation-key-vocab" class="mt-3 space-y-2.5">
+              <!-- Kosakata penting dirender via JS -->
+            </div>
+          </div>
+
+          <div class="bg-amber-50 rounded-3xl p-6 border border-amber-200 shadow-sm space-y-3">
+            <h3 class="font-bold text-amber-950 flex items-center gap-2">
+              <span>🎤</span> Latihan Mengulang Percakapan
+            </h3>
+            <p class="text-xs text-amber-900 leading-relaxed">
+              Uji pemahamanmu! Lengkapi bagian kalimat Bahasa Gorontalo yang rumpang dari dialog di samping:
+            </p>
+            <div id="conversation-practice-box" class="bg-white rounded-2xl p-4 border border-amber-200 space-y-3">
+              <!-- Latihan interaktif dirender via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 7. HALAMAN TUTOR DIGITAL BAHASA GORONTALO                 -->
+    <!-- ========================================================= -->
+    <section id="page-tutor" class="page-section hidden space-y-6">
+      <div class="grid lg:grid-cols-12 gap-6">
+        <!-- Profil & Kemampuan Tutor -->
+        <div class="lg:col-span-4 bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-5">
+          <div class="flex items-center gap-4">
+            <div id="tutor-avatar-card" class="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-700 to-indigo-900 flex items-center justify-center border-2 border-amber-400 shadow">
+              <svg class="w-13 h-13" viewBox="0 0 64 64">
+                <path d="M12 62 C12 46, 52 46, 52 62 Z" fill="#5B21B6"/>
+                <circle cx="32" cy="30" r="14" fill="#F1C27D"/>
+                <path d="M18 24 C18 13, 46 13, 46 24 Z" fill="#78350F"/>
+                <circle cx="27" cy="28" r="1.8" fill="#1E293B"/>
+                <circle cx="37" cy="28" r="1.8" fill="#1E293B"/>
+                <ellipse class="mouth-anim" cx="32" cy="36" rx="4.5" ry="2.5" fill="#991B1B"/>
+              </svg>
+            </div>
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">● Aktif • Verifikasi Bahasa</span>
+              <h2 class="font-display text-xl font-extrabold text-slate-900 mt-1">Baate Hulontalo</h2>
+              <p class="text-xs text-slate-500">Tutor Digital Bahasa & Budaya Gorontalo</p>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+            <strong>Prinsip Akurasi Bahasa:</strong> Tutor ini membedakan kosakata yang telah <strong>Terverifikasi</strong> dari sumber kamus/penutur asli dengan kata yang masih <strong>Memerlukan Pemeriksaan Penutur Asli</strong> agar tidak terjadi kesalahan pengajaran.
+          </p>
+
+          <div class="space-y-2">
+            <span class="text-xs font-bold text-slate-700 uppercase">Pertanyaan Cepat:</span>
+            <button onclick="askTutorPreset('Apa bahasa Gorontalo dari Makan dan Minum?')" class="w-full text-left text-xs p-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-medium transition">
+              💬 Apa bahasa Gorontalo dari "Makan" dan "Minum"?
+            </button>
+            <button onclick="askTutorPreset('Terjemahkan: Saya mau pergi ke rumah')" class="w-full text-left text-xs p-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-medium transition">
+              🔄 Terjemahkan: "Saya mau pergi ke rumah"
+            </button>
+            <button onclick="askTutorPreset('Koreksi kalimat: Watiya mongaa taluhu')" class="w-full text-left text-xs p-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-medium transition">
+              ✅ Koreksi kalimat: "Watiya mongaa taluhu"
+            </button>
+            <button onclick="askTutorPreset('Rekomendasi materi belajar untuk saya')" class="w-full text-left text-xs p-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-medium transition">
+              🎯 Rekomendasi materi sesuai level saya
+            </button>
+            <button onclick="askTutorPreset('Apa bahasa Gorontalo dari Komputer kuantum?')" class="w-full text-left text-xs p-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 font-medium transition">
+              🔍 Uji kata belum terverifikasi: "Komputer kuantum"
+            </button>
+          </div>
+        </div>
+
+        <!-- Area Chat Tutor -->
+        <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[460px] sm:h-[520px] md:h-[580px]">
+          <div class="p-3.5 sm:p-4 border-b border-slate-200 flex items-center justify-between">
+            <span class="font-bold text-xs sm:text-sm text-slate-800">Ruang Konsultasi Tutor (ID • GOR • EN)</span>
+            <button onclick="resetTutorChat()" class="text-xs text-slate-500 hover:text-slate-800 font-medium">Bersihkan Chat</button>
+          </div>
+          <div id="tutor-chat-messages" class="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3.5 sm:space-y-4 bg-slate-50/50">
+            <!-- Pesan chat dirender via JS -->
+          </div>
+          <form onsubmit="handleTutorSubmit(event)" class="p-3 sm:p-3.5 border-t border-slate-200 bg-white rounded-b-3xl flex gap-2">
+            <input type="text" id="tutor-input" placeholder="Tanya arti kata, terjemahan, atau koreksi..." class="flex-1 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-300 focus:border-purple-600 outline-none text-xs sm:text-sm" required />
+            <button type="submit" class="px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs sm:text-sm transition shrink-0">
+              Kirim
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 8. HALAMAN KUIS INTERAKTIF                                -->
+    <!-- ========================================================= -->
+    <section id="page-kuis" class="page-section hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold">Evaluasi Pemahaman</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Kuis Interaktif Bahasa Gorontalo</h2>
+            <p class="text-sm text-slate-600 mt-1">Uji kemampuan kosakata, menyusun kalimat, hingga mendengarkan audio (Listening) dengan pembahasan otomatis.</p>
+          </div>
+        </div>
+
+        <!-- Pengaturan Kuis -->
+        <div id="quiz-setup-panel" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Jenis Kuis</label>
+            <select id="quiz-type-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-medium">
+              <option value="mixed">Campuran (Semua Tipe)</option>
+              <option value="vocab">Tebak Arti Kosakata</option>
+              <option value="sentence">Melengkapi & Susun Kalimat</option>
+              <option value="listening">Kuis Mendengarkan Audio (Listening)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Tingkat Kesulitan</label>
+            <select id="quiz-diff-select" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-medium">
+              <option value="pemula">Pemula (Dasar)</option>
+              <option value="menengah">Menengah</option>
+              <option value="lanjutan">Lanjutan</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2 lg:col-span-1">
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Batas Waktu Opsional</label>
+            <div class="flex gap-2">
+              <select id="quiz-timer-select" class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-medium">
+                <option value="0">Tanpa Batas Waktu</option>
+                <option value="60">60 Detik</option>
+                <option value="120">120 Detik</option>
+              </select>
+              <button onclick="startQuiz()" class="px-5 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs sm:text-sm shadow transition shrink-0">
+                Mulai Kuis
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Area Pengerjaan Kuis -->
+        <div id="quiz-active-panel" class="hidden mt-6 space-y-5">
+          <div class="flex items-center justify-between bg-purple-50 px-5 py-3 rounded-2xl border border-purple-200">
+            <span class="text-sm font-bold text-purple-900" id="quiz-progress-text">Soal 1 dari 5</span>
+            <div class="flex items-center gap-4">
+              <span id="quiz-timer-display" class="hidden text-sm font-extrabold text-rose-600">⏱️ 60s</span>
+              <span class="text-sm font-bold text-emerald-700" id="quiz-live-score">Skor: 0</span>
+            </div>
+          </div>
+
+          <div id="quiz-question-card" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+            <!-- Soal aktif dirender via JS -->
+          </div>
+        </div>
+
+        <!-- Hasil & Pembahasan Kuis -->
+        <div id="quiz-result-panel" class="hidden mt-6 space-y-5">
+          <!-- Hasil akhir & pembahasan dirender via JS -->
+        </div>
+      </div>
+
+      <!-- Rekap Riwayat Nilai Kuis -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <h3 class="font-bold text-slate-900">📊 Rekap Nilai Kuis Pengguna</h3>
+        <div id="quiz-history-list" class="mt-3 text-sm text-slate-600">
+          Belum ada riwayat kuis. Yuk mulai kerjakan kuis pertamamu!
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 9. HALAMAN GAME EDUKASI                                   -->
+    <!-- ========================================================= -->
+    <section id="page-game" class="page-section hidden space-y-6">
+      <!-- Header Poin, Level & Tantangan Harian -->
+      <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-rose-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div>
+            <span class="px-3 py-1 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-300 text-xs font-bold">Belajar Sambil Bermain</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold mt-2">Arena Game Edukasi Bahasa Gorontalo</h2>
+            <p class="text-purple-100 text-sm mt-1">Kumpulkan XP, naikkan level kemahiranmu, raih lencana adat, dan puncaki papan peringkat!</p>
+          </div>
+          <div class="grid grid-cols-3 gap-3 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center">
+            <div>
+              <div class="text-xl sm:text-2xl font-extrabold text-amber-300" id="game-xp-val">0</div>
+              <div class="text-[11px] text-purple-200">Total XP</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-extrabold text-emerald-300" id="game-level-val">Lv. 1</div>
+              <div class="text-[11px] text-purple-200">Level Kamu</div>
+            </div>
+            <div>
+              <div class="text-xl sm:text-2xl font-extrabold text-rose-300" id="game-badge-count">1</div>
+              <div class="text-[11px] text-purple-200">Lencana</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Menu Pilih 6 Permainan -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mt-6">
+          <button onclick="launchGame('tebak-kata')" class="game-selector-btn p-3 rounded-xl bg-white text-slate-900 font-bold text-xs shadow hover:bg-amber-300 transition text-center">
+            🎯 Tebak Kata
+          </button>
+          <button onclick="launchGame('cocok-kata')" class="game-selector-btn p-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition text-center">
+            🔗 Cocokkan Kata
+          </button>
+          <button onclick="launchGame('susun-kalimat')" class="game-selector-btn p-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition text-center">
+            🧩 Susun Kalimat
+          </button>
+          <button onclick="launchGame('memory-card')" class="game-selector-btn p-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition text-center">
+            🃏 Memory Card
+          </button>
+          <button onclick="launchGame('tebak-gambar')" class="game-selector-btn p-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition text-center">
+            🖼️ Tebak Gambar
+          </button>
+          <button onclick="launchGame('tantangan-harian')" class="game-selector-btn p-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition text-center">
+            🔥 Tantangan Harian
+          </button>
+        </div>
+      </div>
+
+      <!-- Panggung Game Aktif + Papan Peringkat & Lencana -->
+      <div class="grid lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm" id="game-stage">
+          <!-- Konten permainan aktif dirender via JS -->
+        </div>
+
+        <div class="lg:col-span-4 space-y-6">
+          <!-- Papan Peringkat -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <span>🏆</span> Papan Peringkat (Leaderboard)
+            </h3>
+            <div id="leaderboard-list" class="mt-4 space-y-2.5">
+              <!-- Leaderboard dirender via JS -->
+            </div>
+          </div>
+
+          <!-- Lencana Penghargaan -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <span>🎖️</span> Lencana Penghargaan
+            </h3>
+            <div id="badges-grid" class="mt-3 grid grid-cols-2 gap-2.5">
+              <!-- Badges dirender via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 10. HALAMAN BUDAYA GORONTALO                              -->
+    <!-- ========================================================= -->
+    <section id="page-budaya" class="page-section hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">Warisan Leluhur Hulontalo</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Mengenal Kekayaan Budaya Gorontalo</h2>
+        <p class="text-sm text-slate-600 mt-1">Setiap unsur budaya Gorontalo memiliki istilah khas yang memperkaya kosakata Bahasa Gorontalo.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="culture-cards-grid">
+        <!-- Kartu budaya lengkap dengan ilustrasi SVG & kosakata dirender via JS -->
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 11. HALAMAN PROFIL PENGGUNA (AKUN, PROGRES & FAVORIT)     -->
+    <!-- ========================================================= -->
+    <section id="page-akun" class="page-section hidden space-y-6">
+      <div class="grid lg:grid-cols-12 gap-6">
+        <!-- Kartu Identitas & Edit Profil -->
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+          <div class="flex items-center gap-4">
+            <div id="profile-avatar-display" class="w-16 h-16 rounded-2xl bg-purple-100 text-3xl flex items-center justify-center border-2 border-purple-400">
+              🧑🏽‍🎓
+            </div>
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 text-xs font-bold" id="profile-rank-title">Pemula Hulontalo</span>
+              <h2 class="font-display text-xl font-extrabold text-slate-900 mt-1" id="profile-name-display">Pelajar Gorontalo</h2>
+              <p class="text-xs text-slate-500" id="profile-email-display">pelajar@bahasagorontalo.id</p>
+            </div>
+          </div>
+
+          <form onsubmit="saveUserProfile(event)" class="space-y-3 pt-2 border-t border-slate-200">
+            <h3 class="font-bold text-sm text-slate-800">Pengaturan Akun & Avatar</h3>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap</label>
+              <input type="text" id="input-profile-name" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" required />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Email / Username</label>
+              <input type="text" id="input-profile-email" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm" required />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Karakter Avatar</label>
+              <div class="flex gap-2" id="avatar-picker">
+                <button type="button" onclick="selectUserAvatar('🧑🏽‍🎓')" class="p-2.5 rounded-xl border border-slate-300 hover:bg-purple-50 text-xl">🧑🏽‍🎓</button>
+                <button type="button" onclick="selectUserAvatar('👩🏽‍🎓')" class="p-2.5 rounded-xl border border-slate-300 hover:bg-purple-50 text-xl">👩🏽‍🎓</button>
+                <button type="button" onclick="selectUserAvatar('👳🏽‍♂️')" class="p-2.5 rounded-xl border border-slate-300 hover:bg-purple-50 text-xl">👳🏽‍♂️</button>
+                <button type="button" onclick="selectUserAvatar('🧕🏽')" class="p-2.5 rounded-xl border border-slate-300 hover:bg-purple-50 text-xl">🧕🏽</button>
+                <button type="button" onclick="selectUserAvatar('🧳')" class="p-2.5 rounded-xl border border-slate-300 hover:bg-purple-50 text-xl">🧳</button>
+              </div>
+            </div>
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-sm transition">
+              Simpan Perubahan Profil
+            </button>
+          </form>
+        </div>
+
+        <!-- Progres Pembelajaran & Kosakata Favorit -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+            <h3 class="font-display text-lg font-extrabold text-slate-900">📈 Perkembangan Pembelajaran</h3>
+            <div class="grid sm:grid-cols-3 gap-3">
+              <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200">
+                <div class="text-xs text-purple-700 font-semibold">Bab Selesai</div>
+                <div class="text-2xl font-extrabold text-purple-950 mt-1" id="stat-completed-chapters">0 / 16</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200">
+                <div class="text-xs text-amber-700 font-semibold">Total Poin XP</div>
+                <div class="text-2xl font-extrabold text-amber-950 mt-1" id="stat-profile-xp">0 XP</div>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
+                <div class="text-xs text-emerald-700 font-semibold">Kosakata Favorit</div>
+                <div class="text-2xl font-extrabold text-emerald-950 mt-1" id="stat-profile-favs">0 Kata</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-3">
+            <h3 class="font-display text-lg font-extrabold text-slate-900">⭐ Daftar Kosakata Favorit Tersimpan</h3>
+            <div id="profile-favorites-list" class="grid sm:grid-cols-2 gap-3">
+              <!-- Daftar favorit dirender via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-300 border-t border-slate-800 mt-12 mb-16 md:mb-0">
+    <div class="h-1 w-full karawo-border"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-center sm:text-left">
+      <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
+        <span class="font-display font-extrabold text-white text-sm">BAHASA GORONTALO</span>
+        <span class="hidden sm:inline text-slate-500">|</span>
+        <span>Hulontalo Lipu'u • Trilingual Platform (ID • GOR • EN)</span>
+      </div>
+      <div class="text-slate-400">
+        Pelestarian Budaya Hulontalo • Aadati Hula-hula'a to Syara'a
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTTOM NAVIGATION BAR UNTUK SMARTPHONE (HP / MOBILE) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] pb-safe">
+    <div class="grid grid-cols-5 h-14 items-center px-1">
+      <button onclick="navigate('home')" data-mobile-nav="home" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 text-purple-700 font-extrabold transition">
+        <span class="text-lg">🏠</span>
+        <span class="text-[10px] mt-0.5">Beranda</span>
+      </button>
+      <button onclick="navigate('kamus')" data-mobile-nav="kamus" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-purple-700 transition">
+        <span class="text-lg">📖</span>
+        <span class="text-[10px] mt-0.5">Kamus</span>
+      </button>
+      <button onclick="navigate('materi')" data-mobile-nav="materi" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-purple-700 transition">
+        <span class="text-lg">🎓</span>
+        <span class="text-[10px] mt-0.5">Materi</span>
+      </button>
+      <button onclick="navigate('game')" data-mobile-nav="game" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-purple-700 transition">
+        <span class="text-lg">🎮</span>
+        <span class="text-[10px] mt-0.5">Game</span>
+      </button>
+      <button onclick="toggleMobileMenu()" class="mobile-bottom-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-purple-700 transition">
+        <span class="text-lg">☰</span>
+        <span class="text-[10px] mt-0.5">Menu</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT: DATABASE KOSAKATA, AUDIO TTS, LOGIKA INTERAKTIF -->
+  <!-- ========================================================= -->
+  <script src="js/script.js"></script>
+</body>
+</html>
