@@ -1,88 +1,17 @@
 // ---------------------------------------------------------
 // 1. DATABASE KOSAKATA TERVERIFIKASI (ID - GORONTALO - EN)
+// Menggunakan data autentik dari Kamus Bahasa Gorontalo - Indonesia (Depdikbud 1977)
 // ---------------------------------------------------------
-const DICTIONARY_DB = [
-  { id: 1, idWord: "Makan", gorWord: "Mongaa", enWord: "Eat", category: "Kata Kerja", verified: true,
-    exId: "Saya sedang makan nasi.", exGor: "Watiya donggo mongaa ila.", exEn: "I am eating rice." },
-  { id: 2, idWord: "Minum", gorWord: "Mongilu", enWord: "Drink", category: "Kata Kerja", verified: true,
-    exId: "Ayo minum air putih.", exGor: "Mai mongilu taluhu.", exEn: "Let's drink water." },
-  { id: 3, idWord: "Apa kabar?", gorWord: "Wolo habari?", enWord: "How are you?", category: "Sapaan", verified: true,
-    exId: "Apa kabar saudaraku?", exGor: "Wolo habari wutatou?", exEn: "How are you, my sibling?" },
-  { id: 4, idWord: "Terima kasih", gorWord: "Odu'olo", enWord: "Thank you", category: "Sapaan", verified: true,
-    exId: "Terima kasih banyak atas bantuannya.", exGor: "Odu'olo da'a to tulungiyo.", exEn: "Thank you very much for the help." },
-  { id: 5, idWord: "Rumah", gorWord: "Bele", enWord: "House / Home", category: "Kata Benda", verified: true,
-    exId: "Rumah kami berada di dekat danau.", exGor: "Bele lami to dimuka lo bulalo.", exEn: "Our house is near the lake." },
-  { id: 6, idWord: "Air", gorWord: "Taluhu", enWord: "Water", category: "Kata Benda", verified: true,
-    exId: "Air di pegunungan sangat jernih.", exGor: "Taluhu to huidu moputi da'a.", exEn: "The water in the mountain is very clear." },
-  { id: 7, idWord: "Saya / Aku", gorWord: "Watiya / Wau", enWord: "I / Me", category: "Sapaan", verified: true,
-    exId: "Saya berasal dari Gorontalo.", exGor: "Watiya lonto Hulontalo.", exEn: "I come from Gorontalo." },
-  { id: 8, idWord: "Kamu / Engkau", gorWord: "Yio / Ito", enWord: "You", category: "Sapaan", verified: true,
-    exId: "Siapa nama kamu?", exGor: "Tiima tanggulo yio?", exEn: "What is your name?" },
-  { id: 9, idWord: "Besar", gorWord: "Da'a", enWord: "Big / Large", category: "Kata Sifat", verified: true,
-    exId: "Danau Limboto sangat besar.", exGor: "Bulalo Limutu da'a.", exEn: "Lake Limboto is very big." },
-  { id: 10, idWord: "Kecil", gorWord: "Kiki'o", enWord: "Small / Little", category: "Kata Sifat", verified: true,
-    exId: "Adik saya masih kecil.", exGor: "Wali'u donggo kiki'o.", exEn: "My younger sibling is still small." },
-  { id: 11, idWord: "Pergi", gorWord: "Mona'o", enWord: "Go", category: "Kata Kerja", verified: true,
-    exId: "Ibu pergi ke pasar.", exGor: "Ti Mama mona'o ode patali.", exEn: "Mother goes to the market." },
-  { id: 12, idWord: "Datang / Mari", gorWord: "Mai / Ledungga", enWord: "Come / Arrive", category: "Kata Kerja", verified: true,
-    exId: "Mari masuk ke dalam rumah.", exGor: "Mai tumuwoto ode delomo bele.", exEn: "Come inside the house." },
-  { id: 13, idWord: "Tidur", gorWord: "Motuluhu", enWord: "Sleep", category: "Kata Kerja", verified: true,
-    exId: "Anak-anak sudah tidur.", exGor: "Mongodula'a ma lotuluhu.", exEn: "The children have gone to sleep." },
-  { id: 14, idWord: "Belajar", gorWord: "Balajari", enWord: "Study / Learn", category: "Kata Kerja", verified: true,
-    exId: "Kami belajar Bahasa Gorontalo.", exGor: "Ami balajari Bahasa Hulontalo.", exEn: "We are learning Gorontalo language." },
-  { id: 15, idWord: "Pasar", gorWord: "Patali", enWord: "Market", category: "Kata Benda", verified: true,
-    exId: "Di pasar banyak ikan segar.", exGor: "To patali dadaata uponula bohu.", exEn: "In the market there are many fresh fish." },
-  { id: 16, idWord: "Ikan", gorWord: "Uponula", enWord: "Fish", category: "Kata Benda", verified: true,
-    exId: "Ikan bakar sangat enak.", exGor: "Uponula tilinanga mo'olohiyo da'a.", exEn: "Grilled fish is very delicious." },
-  { id: 17, idWord: "Nasi", gorWord: "Ila", enWord: "Cooked Rice", category: "Kata Benda", verified: true,
-    exId: "Nasi hangat sudah siap.", exGor: "Ila mopatu ma sadiya.", exEn: "Warm rice is ready." },
-  { id: 18, idWord: "Jagung", gorWord: "Binte", enWord: "Corn", category: "Kata Benda", verified: true,
-    exId: "Sup jagung khas Gorontalo.", exGor: "Binte biluhuta khas Hulontalo.", exEn: "Gorontalo traditional corn soup." },
-  { id: 19, idWord: "Ayah", gorWord: "Ti Papa / Ayah", enWord: "Father", category: "Kata Benda", verified: true,
-    exId: "Ayah bekerja di kebun.", exGor: "Ti Papa mokaraja to ilengi.", exEn: "Father works in the farm." },
-  { id: 20, idWord: "Ibu", gorWord: "Ti Mama / Ibu", enWord: "Mother", category: "Kata Benda", verified: true,
-    exId: "Ibu memasak di dapur.", exGor: "Ti Mama motubu to depula.", exEn: "Mother cooks in the kitchen." },
-  { id: 21, idWord: "Anak", gorWord: "Wala'o", enWord: "Child", category: "Kata Benda", verified: true,
-    exId: "Anak yang rajin belajar.", exGor: "Wala'o u rajini balajari.", exEn: "A child who studies diligently." },
-  { id: 22, idWord: "Saudara / Teman", gorWord: "Wutato / Tamani", enWord: "Sibling / Friend", category: "Sapaan", verified: true,
-    exId: "Kita semua bersaudara.", exGor: "Ito nga'amila mowutato.", exEn: "We are all siblings." },
-  { id: 23, idWord: "Baik / Bagus", gorWord: "Mopiyohu", enWord: "Good / Fine", category: "Kata Sifat", verified: true,
-    exId: "Kabar saya baik-baik saja.", exGor: "Habari lami mopiyohu.", exEn: "I am doing fine." },
-  { id: 24, idWord: "Enak / Lezat", gorWord: "Mo'olohiyo", enWord: "Delicious / Tasty", category: "Kata Sifat", verified: true,
-    exId: "Kue karawo ini sangat enak.", exGor: "Kukisi karawo botiye mo'olohiyo.", exEn: "This karawo cookie is very delicious." },
-  { id: 25, idWord: "Cantik / Indah", gorWord: "Gagah / Mo'ohengu", enWord: "Beautiful / Pretty", category: "Kata Sifat", verified: true,
-    exId: "Pemandangan pantai sangat indah.", exGor: "Pemandangan pentadu gagah da'a.", exEn: "The beach view is very beautiful." },
-  { id: 26, idWord: "Panas", gorWord: "Mopatu", enWord: "Hot / Warm", category: "Kata Sifat", verified: true,
-    exId: "Cuaca siang ini panas.", exGor: "Dulahu botiye mopatu.", exEn: "Today's weather is hot." },
-  { id: 27, idWord: "Dingin", gorWord: "Mohuhulo", enWord: "Cold / Cool", category: "Kata Sifat", verified: true,
-    exId: "Air pagi terasa dingin.", exGor: "Taluhu dumodupo mohuhulo.", exEn: "Morning water feels cold." },
-  { id: 28, idWord: "Satu", gorWord: "Tuwawu", enWord: "One", category: "Sehari-hari", verified: true,
-    exId: "Satu keluarga yang rukun.", exGor: "Tuwawu ngongala'a u akuru.", exEn: "One harmonious family." },
-  { id: 29, idWord: "Dua", gorWord: "Duluwo", enWord: "Two", category: "Sehari-hari", verified: true,
-    exId: "Dua ekor ikan di piring.", exGor: "Duluwo uponula to pingge.", exEn: "Two fish on the plate." },
-  { id: 30, idWord: "Tiga", gorWord: "Totolu", enWord: "Three", category: "Sehari-hari", verified: true,
-    exId: "Tiga hari lagi kami pulang.", exGor: "Totolu huyi poli ami mohuwalingo.", exEn: "In three days we will go home." },
-  { id: 31, idWord: "Danau", gorWord: "Bulalo", enWord: "Lake", category: "Kata Benda", verified: true,
-    exId: "Danau Limboto kebanggaan Gorontalo.", exGor: "Bulalo Limutu kebanggaan Hulontalo.", exEn: "Lake Limboto is Gorontalo's pride." },
-  { id: 32, idWord: "Gunung", gorWord: "Huidu", enWord: "Mountain", category: "Kata Benda", verified: true,
-    exId: "Gunung itu menjulang tinggi.", exGor: "Huidu boyito molanggato.", exEn: "That mountain stands tall." },
-  { id: 33, idWord: "Laut", gorWord: "Deheto", enWord: "Sea / Ocean", category: "Kata Benda", verified: true,
-    exId: "Nelayan melaut mencari ikan.", exGor: "Ta mongayilola mona'o ode deheto.", exEn: "Fishermen go to the sea to catch fish." },
-  { id: 34, idWord: "Pagi", gorWord: "Dumodupo", enWord: "Morning", category: "Sehari-hari", verified: true,
-    exId: "Selamat pagi semuanya.", exGor: "Assalamu'alaikum, dumodupo mopiyohu.", exEn: "Good morning everyone." },
-  { id: 35, idWord: "Malam", gorWord: "Huyi", enWord: "Night", category: "Sehari-hari", verified: true,
-    exId: "Malam pasang lampu di Gorontalo.", exGor: "Tumbilotohe to huyi lo Puasa.", exEn: "Lantern night during Ramadan in Gorontalo." },
-  { id: 36, idWord: "Permisi / Maaf", gorWord: "Tabi'a / Mo'o'afu", enWord: "Excuse me / Sorry", category: "Sapaan", verified: true,
-    exId: "Permisi, numpang lewat.", exGor: "Tabi'a, watiya motaliwatu.", exEn: "Excuse me, passing through." },
-  { id: 37, idWord: "Ya", gorWord: "O'o", enWord: "Yes", category: "Sehari-hari", verified: true,
-    exId: "Ya, saya sudah mengerti.", exGor: "O'o, watiya ma lo'otawa.", exEn: "Yes, I already understand." },
-  { id: 38, idWord: "Tidak", gorWord: "Diila", enWord: "No / Not", category: "Sehari-hari", verified: true,
-    exId: "Tidak masalah.", exGor: "Diila wolo-wolo.", exEn: "No problem." },
-  { id: 39, idWord: "Berapa", gorWord: "Onggo / Pila", enWord: "How much / How many", category: "Sehari-hari", verified: true,
-    exId: "Berapa harga ikan ini?", exGor: "Pila haraga lo uponula botiye?", exEn: "How much is this fish?" },
-  { id: 40, idWord: "Cinta / Sayang", gorWord: "Otoli'anga", enWord: "Love / Affection", category: "Kata Sifat", verified: true,
-    exId: "Saya mencintai budaya Gorontalo.", exGor: "Watiya motoli'anga aadati lo Hulontalo.", exEn: "I love Gorontalo culture." }
-];
+const DICTIONARY_DB = (typeof window !== "undefined" && window.DICTIONARY_DATA && window.DICTIONARY_DATA.length > 0)
+  ? window.DICTIONARY_DATA
+  : [
+      { id: 1, idWord: "Makan", gorWord: "Mongaa", enWord: "Eat", category: "Kata Kerja", verified: true,
+        exId: "Saya sedang makan nasi.", exGor: "Watiya donggo mongaa ila.", exEn: "I am eating rice." },
+      { id: 2, idWord: "Minum", gorWord: "Mongilu", enWord: "Drink", category: "Kata Kerja", verified: true,
+        exId: "Ayo minum air putih.", exGor: "Mai mongilu taluhu.", exEn: "Let's drink water." },
+      { id: 3, idWord: "Rumah", gorWord: "Bele", enWord: "House / Home", category: "Kata Benda", verified: true,
+        exId: "Rumah kami berada di dekat danau.", exGor: "Bele lami to dimuka lo bulalo.", exEn: "Our house is near the lake." }
+    ];
 
 // ---------------------------------------------------------
 // 2. DATA MATERI BERTINGKAT (PEMULA, MENENGAH, LANJUTAN)
@@ -378,35 +307,40 @@ const CULTURE_DB = [
     gorTerm: "Bili'u wawu Makuta",
     desc: "Busana kebesaran pengantin dan upacara adat Gorontalo yang memadukan empat warna Tilabataila: Ungu (keagungan), Merah (keberanian), Kuning (kemuliaan), dan Hijau (kesuburan).",
     color: "from-purple-700 to-indigo-900",
-    icon: "👑"
+    icon: "👑",
+    image: "images/pakaian-adat-biliu-makuta.jpg"
   },
   {
     title: "Sulaman Karawo",
     gorTerm: "Karawo Hulontalo",
     desc: "Kain sulam kerawang khas Gorontalo yang dibuat secara manual dengan ketelitian tinggi oleh pengrajin lokal dan telah mendunia sebagai warisan budaya takbenda.",
     color: "from-rose-600 to-red-800",
-    icon: "🧵"
+    icon: "🧵",
+    image: "images/sulaman-karawo.jpg"
   },
   {
     title: "Tarian Saronde & Dana-dana",
-    gorTerm: "Tidi / Saronde",
-    desc: "Tarian tradisional yang ditarikan pada malam pertunangan (Mopotilandahu) menggunakan selendang sebagai simbol perkenalan dan restu keluarga.",
+    gorTerm: "Saronde wawu Dana-dana",
+    desc: "Tarian khas Gorontalo: Tari Saronde yang memikat dengan kibasan selendang pada malam pertunangan, dan Tari Dana-dana yang rancak penuh semangat kebersamaan.",
     color: "from-emerald-600 to-teal-800",
-    icon: "💃"
+    icon: "💃",
+    image: "images/tarian-saronde-danadana.jpg"
   },
   {
     title: "Kuliner Binte Biluhuta & Ilabulo",
-    gorTerm: "Binte Biluhuta",
-    desc: "Sup jagung siram yang memadukan jagung manis, kelapa parut, ikan cakalang/udang, dan daun kemangi. Melambangkan persatuan berbagai unsur menjadi cita rasa harmonis.",
+    gorTerm: "Binte Biluhuta wawu Ilabulo",
+    desc: "Kuliner legendaris Gorontalo: Binte Biluhuta (sup jagung manis siram dengan kelapa, cakalang & kemangi) dan Ilabulo (olahan sagu gurih berbalut daun pisang bakar).",
     color: "from-orange-500 to-amber-700",
-    icon: "🍲"
+    icon: "🍲",
+    image: "images/kuliner-binte-biluhuta-ilabulo.jpg"
   },
   {
     title: "Tradisi Tumbilotohe & Walima",
-    gorTerm: "Tumbilotohe",
-    desc: "Tradisi memasang ribuan lampu minyak (tohe) di halaman rumah dan jalanan pada tiga malam terakhir Ramadan untuk menyambut malam Lailatul Qadar.",
+    gorTerm: "Tumbilotohe wawu Walima",
+    desc: "Tradisi agung Gorontalo: Tumbilotohe (festival ribuan lampu minyak di malam likur Ramadan) dan Walima (pawai kue tradisional kolombengi memperingati Maulid Nabi).",
     color: "from-indigo-700 to-slate-900",
-    icon: "🪔"
+    icon: "🪔",
+    image: "images/tradisi-tumbilotohe-walima.jpg"
   }
 ];
 
@@ -623,6 +557,9 @@ function updateGlobalUI() {
   document.getElementById("header-avatar").textContent = appState.user.avatar;
   document.getElementById("fav-count-badge").textContent = appState.favorites.length;
 
+  const statVocab = document.getElementById("stat-vocab-count");
+  if (statVocab) statVocab.textContent = DICTIONARY_DB.length + "+";
+
   const gameXp = document.getElementById("game-xp-val");
   if (gameXp) {
     gameXp.textContent = appState.xp;
@@ -656,14 +593,21 @@ function speakDailyQuote() {
 // ---------------------------------------------------------
 // 9. KAMUS DIGITAL INTERAKTIF (ID - GORONTALO - EN)
 // ---------------------------------------------------------
+// 9. KAMUS DIGITAL INTERAKTIF (ID - GORONTALO - EN)
+// Sumber Autentik: Kamus Bahasa Gorontalo - Indonesia (Depdikbud 1977)
+// ---------------------------------------------------------
 let selectedLetter = "ALL";
 let showFavOnly = false;
+let dictCurrentPage = 1;
+const DICT_PER_PAGE = 12;
 
 function initAlphabetBar() {
   const bar = document.getElementById("alphabet-filter-bar");
-  const letters = ["ALL", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")];
+  if (!bar) return;
+  // Alfabet Bahasa Gorontalo sesuai Kamus Depdikbud 1977
+  const letters = ["ALL", "A", "B", "C", "D", "E", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "W", "Y"];
   bar.innerHTML = letters.map(l => `
-    <button onclick="setDictLetter('${l}')" data-letter="${l}" class="alpha-btn shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${l === 'ALL' ? 'bg-purple-700 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+    <button onclick="setDictLetter('${l}')" data-letter="${l}" class="alpha-btn shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition ${l === selectedLetter ? 'bg-purple-700 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
       ${l === 'ALL' ? 'Semua' : l}
     </button>
   `).join("");
@@ -671,21 +615,30 @@ function initAlphabetBar() {
 
 function setDictLetter(letter) {
   selectedLetter = letter;
+  dictCurrentPage = 1;
   document.querySelectorAll(".alpha-btn").forEach(btn => {
     if (btn.getAttribute("data-letter") === letter) {
-      btn.className = "alpha-btn shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-bold transition bg-purple-700 text-white shadow-sm";
+      btn.className = "alpha-btn shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition bg-purple-700 text-white shadow-sm";
     } else {
-      btn.className = "alpha-btn shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200";
+      btn.className = "alpha-btn shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200";
     }
   });
   renderDictionary();
 }
 
+function onDictFilterChange() {
+  dictCurrentPage = 1;
+  renderDictionary();
+}
+
 function toggleFavOnlyFilter() {
   showFavOnly = !showFavOnly;
+  dictCurrentPage = 1;
   const btn = document.getElementById("btn-fav-filter");
-  btn.classList.toggle("bg-amber-100", showFavOnly);
-  btn.classList.toggle("border-amber-400", showFavOnly);
+  if (btn) {
+    btn.classList.toggle("bg-amber-100", showFavOnly);
+    btn.classList.toggle("border-amber-400", showFavOnly);
+  }
   renderDictionary();
 }
 
@@ -702,18 +655,104 @@ function toggleFavoriteWord(wordId) {
   renderDictionary();
 }
 
+function changeDictPage(page) {
+  dictCurrentPage = page;
+  renderDictionary();
+  const el = document.getElementById("dictionary-results");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function speakDictWord(id, lang = "gor") {
+  const item = DICTIONARY_DB.find(x => x.id === id);
+  if (!item) return;
+  if (lang === "gor") {
+    speakText(`${item.gorWord}. ${item.exGor}`, "gor", item.gorWord, `${item.idWord} (${item.enWord})`);
+  } else if (lang === "en") {
+    speakText(`${item.enWord}. ${item.exEn}`, "en", item.enWord, item.idWord);
+  } else {
+    speakText(`${item.idWord}. ${item.exId}`, "id", item.idWord, item.gorWord);
+  }
+}
+
+function renderPaginationControls(totalPages, currentPage) {
+  const pagEl = document.getElementById("dict-pagination");
+  if (!pagEl) return;
+  if (totalPages <= 1) {
+    pagEl.innerHTML = "";
+    return;
+  }
+
+  let html = "";
+  // Tombol Previous
+  html += `
+    <button onclick="changeDictPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-300 cursor-not-allowed"' : 'class="px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-xs font-bold text-slate-700 transition"'}>
+      ← Prev
+    </button>
+  `;
+
+  // Penentuan halaman yang ditampilkan
+  let pagesToShow = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pagesToShow.push(i);
+  } else {
+    pagesToShow.push(1);
+    if (currentPage > 3) pagesToShow.push("...");
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+    for (let i = start; i <= end; i++) pagesToShow.push(i);
+    if (currentPage < totalPages - 2) pagesToShow.push("...");
+    pagesToShow.push(totalPages);
+  }
+
+  pagesToShow.forEach(p => {
+    if (p === "...") {
+      html += `<span class="px-1.5 py-1 text-xs text-slate-400">...</span>`;
+    } else if (p === currentPage) {
+      html += `<button class="px-3 py-1.5 rounded-lg bg-purple-700 text-white font-bold text-xs shadow-sm">${p}</button>`;
+    } else {
+      html += `<button onclick="changeDictPage(${p})" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs transition">${p}</button>`;
+    }
+  });
+
+  // Tombol Next
+  html += `
+    <button onclick="changeDictPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-300 cursor-not-allowed"' : 'class="px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-xs font-bold text-slate-700 transition"'}>
+      Next →
+    </button>
+  `;
+
+  pagEl.innerHTML = html;
+}
+
 function renderDictionary() {
-  const query = document.getElementById("dict-search-input").value.trim().toLowerCase();
-  const direction = document.getElementById("dict-direction").value;
-  const category = document.getElementById("dict-category").value;
+  const query = (document.getElementById("dict-search-input") ? document.getElementById("dict-search-input").value : "").trim().toLowerCase();
+  const direction = document.getElementById("dict-direction") ? document.getElementById("dict-direction").value : "all";
+  const category = document.getElementById("dict-category") ? document.getElementById("dict-category").value : "all";
   const container = document.getElementById("dictionary-results");
+  const countTextEl = document.getElementById("dict-count-text");
+
+  if (!container) return;
 
   let filtered = DICTIONARY_DB.filter(item => {
     if (showFavOnly && !appState.favorites.includes(item.id)) return false;
     if (category !== "all" && item.category !== category) return false;
 
-    const targetWord = direction === "gor-id" ? item.gorWord : (direction === "en-gor" ? item.enWord : item.idWord);
-    if (selectedLetter !== "ALL" && !targetWord.toUpperCase().startsWith(selectedLetter)) return false;
+    // Filter Huruf Alfabet A-Z
+    if (selectedLetter !== "ALL") {
+      const gorClean = item.gorWord.toUpperCase().replace(/^[^A-Z]+/, "");
+      const idClean = item.idWord.toUpperCase().replace(/^[^A-Z]+/, "");
+      const enClean = item.enWord.toUpperCase().replace(/^[^A-Z]+/, "");
+
+      if (direction === "gor-id") {
+        if (!gorClean.startsWith(selectedLetter)) return false;
+      } else if (direction === "id-gor") {
+        if (!idClean.startsWith(selectedLetter)) return false;
+      } else if (direction === "en-gor") {
+        if (!enClean.startsWith(selectedLetter)) return false;
+      } else {
+        if (!gorClean.startsWith(selectedLetter) && !idClean.startsWith(selectedLetter)) return false;
+      }
+    }
 
     if (!query) return true;
     if (direction === "id-gor") return item.idWord.toLowerCase().includes(query);
@@ -726,28 +765,39 @@ function renderDictionary() {
     );
   });
 
-  if (filtered.length === 0) {
+  const totalItems = filtered.length;
+  const totalPages = Math.ceil(totalItems / DICT_PER_PAGE) || 1;
+  if (dictCurrentPage > totalPages) dictCurrentPage = totalPages;
+  if (dictCurrentPage < 1) dictCurrentPage = 1;
+
+  if (totalItems === 0) {
     container.innerHTML = `
       <div class="md:col-span-2 bg-amber-50 border border-amber-300 rounded-2xl p-6 text-center space-y-2">
         <div class="text-3xl">🔍</div>
-        <h3 class="font-bold text-amber-950 text-base">Kosakata "${query || selectedLetter}" Belum Tersedia / Masih Perlu Diperiksa</h3>
+        <h3 class="font-bold text-amber-950 text-base">Kosakata "${query || selectedLetter}" Tidak Ditemukan</h3>
         <p class="text-xs text-amber-900 max-w-lg mx-auto leading-relaxed">
-          Demi menjaga keakuratan Bahasa Gorontalo, kami tidak menampilkan terjemahan otomatis tanpa verifikasi penutur asli. Kosakata ini ditandai sebagai <strong>Perlu Pemeriksaan Penutur Asli</strong>.
+          Semua kosakata pada aplikasi ini bersumber langsung dari <strong>Kamus Bahasa Gorontalo - Indonesia (Drs. Mansoer Pateda, Depdikbud 1977)</strong>. Coba cari kata dasar lain atau periksa ejaanmu.
         </p>
       </div>
     `;
+    if (countTextEl) countTextEl.textContent = "Tidak ada kosakata yang cocok.";
+    renderPaginationControls(0, 1);
     return;
   }
 
-  container.innerHTML = filtered.map(item => {
+  const startIndex = (dictCurrentPage - 1) * DICT_PER_PAGE;
+  const endIndex = Math.min(startIndex + DICT_PER_PAGE, totalItems);
+  const pagedItems = filtered.slice(startIndex, endIndex);
+
+  container.innerHTML = pagedItems.map(item => {
     const isFav = appState.favorites.includes(item.id);
     return `
       <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-purple-300 transition flex flex-col justify-between gap-4">
         <div>
           <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] font-semibold">${item.category}</span>
-              <span class="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">✓ Terverifikasi</span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-700 text-[11px] font-semibold border border-purple-100">${item.category}</span>
+              <span class="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">✓ Pateda 1977</span>
             </div>
             <button onclick="toggleFavoriteWord(${item.id})" class="p-1.5 rounded-lg hover:bg-amber-50 text-lg transition" title="Simpan Favorit">
               ${isFav ? '⭐' : '☆'}
@@ -777,16 +827,25 @@ function renderDictionary() {
         </div>
 
         <div class="flex flex-wrap items-center gap-2 pt-1">
-          <button onclick="speakText('${item.gorWord.replace(/'/g, "\\'")}. ${item.exGor.replace(/'/g, "\\'")}', 'gor', '${item.gorWord.replace(/'/g, "\\'")}', '${item.idWord} (${item.enWord})')" class="flex-1 py-2 px-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
+          <button onclick="speakDictWord(${item.id}, 'gor')" class="flex-1 py-2 px-3 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition">
             <span>🔊</span> Lafal Gorontalo
           </button>
-          <button onclick="speakText('${item.enWord}. ${item.exEn}', 'en', '${item.enWord}', '${item.idWord}')" class="py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+          <button onclick="speakDictWord(${item.id}, 'id')" class="py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition" title="Dengarkan Bahasa Indonesia">
+            🇮🇩 ID
+          </button>
+          <button onclick="speakDictWord(${item.id}, 'en')" class="py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition" title="Dengarkan English">
             🇬🇧 EN
           </button>
         </div>
       </div>
     `;
   }).join("");
+
+  if (countTextEl) {
+    countTextEl.innerHTML = `Menampilkan <strong class="text-slate-900">${startIndex + 1}–${endIndex}</strong> dari <strong class="text-purple-700">${totalItems}</strong> kosakata autentik (Kamus Depdikbud 1977)`;
+  }
+
+  renderPaginationControls(totalPages, dictCurrentPage);
 }
 
 // ---------------------------------------------------------
@@ -1127,6 +1186,59 @@ const QUIZ_BANK = [
   { type: "sentence", diff: "lanjutan", q: "Susun kata acak berikut menjadi kalimat benar: [taluhu] - [Watiya] - [mohuhulo] - [mongilu]", opts: ["Watiya mongilu taluhu mohuhulo", "Taluhu mohuhulo watiya mongilu", "Mongilu watiya mohuhulo taluhu", "Watiya taluhu mongilu mohuhulo"], ans: 0, exp: "Pola S-P-O + Kata Sifat: Watiya (S) mongilu (P) taluhu mohuhulo (O: air dingin)." }
 ];
 
+function generateDynamicVocabQuestions(count = 5) {
+  const questions = [];
+  const shuffledDict = [...DICTIONARY_DB].sort(() => 0.5 - Math.random());
+  for (let i = 0; i < Math.min(count, shuffledDict.length); i++) {
+    const target = shuffledDict[i];
+    const distractors = DICTIONARY_DB
+      .filter(w => w.id !== target.id && w.idWord !== target.idWord)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
+      .map(w => w.idWord);
+
+    const opts = [...distractors, target.idWord].sort(() => 0.5 - Math.random());
+    const ans = opts.indexOf(target.idWord);
+
+    questions.push({
+      type: "vocab",
+      diff: "pemula",
+      q: `Apa arti kata '${target.gorWord}' dalam Bahasa Indonesia?`,
+      opts: opts,
+      ans: ans,
+      exp: `'${target.gorWord}' berarti '${target.idWord}' (${target.enWord}). Contoh: '${target.exGor}' (${target.exId})`
+    });
+  }
+  return questions;
+}
+
+function generateDynamicListeningQuestions(count = 3) {
+  const questions = [];
+  const shuffledDict = [...DICTIONARY_DB].sort(() => 0.5 - Math.random());
+  for (let i = 0; i < Math.min(count, shuffledDict.length); i++) {
+    const target = shuffledDict[i];
+    const distractors = DICTIONARY_DB
+      .filter(w => w.id !== target.id && w.idWord !== target.idWord)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
+      .map(w => w.idWord);
+
+    const opts = [...distractors, target.idWord].sort(() => 0.5 - Math.random());
+    const ans = opts.indexOf(target.idWord);
+
+    questions.push({
+      type: "listening",
+      diff: "pemula",
+      audioText: target.gorWord,
+      q: `Dengarkan pelafalan audio berikut, lalu pilih arti kata yang tepat!`,
+      opts: opts,
+      ans: ans,
+      exp: `Audio melafalkan '${target.gorWord}' yang artinya '${target.idWord}' (${target.enWord}).`
+    });
+  }
+  return questions;
+}
+
 let activeQuizQuestions = [];
 let currentQuizIdx = 0;
 let currentQuizScore = 0;
@@ -1138,8 +1250,21 @@ function startQuiz() {
   const diff = document.getElementById("quiz-diff-select").value;
   const timerSec = parseInt(document.getElementById("quiz-timer-select").value, 10);
 
-  let pool = QUIZ_BANK.filter(q => (type === "mixed" || q.type === type));
-  if (pool.length < 3) pool = [...QUIZ_BANK];
+  let pool = [];
+  if (type === "vocab") {
+    pool = generateDynamicVocabQuestions(5);
+  } else if (type === "listening") {
+    pool = generateDynamicListeningQuestions(5);
+  } else if (type === "sentence") {
+    pool = QUIZ_BANK.filter(q => q.type === "sentence");
+    if (pool.length === 0) pool = [...QUIZ_BANK];
+  } else {
+    // "mixed"
+    const vocabs = generateDynamicVocabQuestions(3);
+    const listenings = generateDynamicListeningQuestions(2);
+    const sentences = QUIZ_BANK.filter(q => q.type === "sentence");
+    pool = [...vocabs, ...listenings, ...sentences].sort(() => 0.5 - Math.random()).slice(0, 5);
+  }
 
   activeQuizQuestions = pool.slice(0, 5);
   currentQuizIdx = 0;
@@ -1586,7 +1711,7 @@ function renderCultureCards() {
   grid.innerHTML = CULTURE_DB.map(c => `
     <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between group hover:shadow-md transition">
       <div>
-        <div class="h-36 ${c.image ? 'relative overflow-hidden' : `bg-gradient-to-r ${c.color} p-6 flex items-center justify-between text-white`}">
+        <div class="h-44 sm:h-48 ${c.image ? 'relative overflow-hidden' : `bg-gradient-to-r ${c.color} p-6 flex items-center justify-between text-white`}">
           ${c.image ? `
             <img src="${c.image}" alt="${c.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/30 to-transparent p-5 flex flex-col justify-end">

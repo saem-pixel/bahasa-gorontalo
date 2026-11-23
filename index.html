@@ -206,7 +206,7 @@
         <div class="bg-white rounded-2xl p-3.5 sm:p-5 border border-slate-200 shadow-sm flex items-center gap-3 sm:gap-4">
           <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl sm:text-2xl font-bold shrink-0">📚</div>
           <div>
-            <div class="text-xl sm:text-2xl font-extrabold text-slate-900" id="stat-vocab-count">65+</div>
+            <div class="text-xl sm:text-2xl font-extrabold text-slate-900" id="stat-vocab-count">520+</div>
             <div class="text-[11px] sm:text-xs font-medium text-slate-500">Kosakata Terverifikasi</div>
           </div>
         </div>
@@ -439,9 +439,14 @@
       <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">Kamus Trilingual Terverifikasi</span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">Kamus Trilingual Terverifikasi</span>
+              <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold flex items-center gap-1">
+                <span>📖</span> Sumber: Depdikbud 1977 (Drs. Mansoer Pateda)
+              </span>
+            </div>
             <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Kamus Digital Indonesia – Gorontalo – Inggris</h2>
-            <p class="text-sm text-slate-600 mt-1">Cari kosakata, dengarkan pelafalan dengan penutur suara, lihat contoh kalimat, dan simpan ke favorit.</p>
+            <p class="text-sm text-slate-600 mt-1">Kosakata autentik bersumber dari <em>Kamus Bahasa Gorontalo - Indonesia</em> (Depdikbud 1977). Dilengkapi pelafalan suara, contoh kalimat, pencarian 3 bahasa, dan bookmark favorit.</p>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="toggleFavOnlyFilter()" id="btn-fav-filter" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 hover:bg-amber-50 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition">
@@ -453,11 +458,11 @@
         <!-- Bar Pencarian & Arah Terjemahan -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-3">
           <div class="sm:col-span-2 md:col-span-6 relative">
-            <input type="text" id="dict-search-input" oninput="renderDictionary()" placeholder="Ketik kata (misal: Makan, Mongaa, Eat, Air, Bele)..." class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none text-sm" />
+            <input type="text" id="dict-search-input" oninput="onDictFilterChange()" placeholder="Ketik kata (misal: Makan, Mongaa, Eat, Bele, Huidu)..." class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 outline-none text-sm" />
             <span class="absolute left-3.5 top-3.5 text-slate-400">🔍</span>
           </div>
           <div class="sm:col-span-1 md:col-span-3">
-            <select id="dict-direction" onchange="renderDictionary()" class="w-full px-3.5 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:border-purple-600 outline-none">
+            <select id="dict-direction" onchange="onDictFilterChange()" class="w-full px-3.5 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:border-purple-600 outline-none">
               <option value="all">Semua Arah (ID ↔ GOR ↔ EN)</option>
               <option value="id-gor">Indonesia → Gorontalo</option>
               <option value="gor-id">Gorontalo → Indonesia</option>
@@ -465,13 +470,14 @@
             </select>
           </div>
           <div class="sm:col-span-1 md:col-span-3">
-            <select id="dict-category" onchange="renderDictionary()" class="w-full px-3.5 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:border-purple-600 outline-none">
+            <select id="dict-category" onchange="onDictFilterChange()" class="w-full px-3.5 py-3 rounded-xl border border-slate-300 bg-white text-sm font-medium focus:border-purple-600 outline-none">
               <option value="all">Semua Kategori</option>
               <option value="Kata Kerja">Kata Kerja (Verb)</option>
               <option value="Kata Benda">Kata Benda (Noun)</option>
               <option value="Kata Sifat">Kata Sifat (Adjective)</option>
               <option value="Sapaan">Sapaan & Ganti Orang</option>
               <option value="Sehari-hari">Kata Sehari-hari & Angka</option>
+              <option value="Ungkapan">Ungkapan Tradisional</option>
             </select>
           </div>
         </div>
@@ -485,6 +491,16 @@
       <!-- Hasil Kamus -->
       <div id="dictionary-results" class="grid md:grid-cols-2 gap-4">
         <!-- Kartu Kosakata Dirender via JS -->
+      </div>
+
+      <!-- Status & Navigasi Halaman Kamus -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm" id="dict-pagination-bar">
+        <div class="text-xs text-slate-600 font-medium" id="dict-count-text">
+          Menampilkan kosakata...
+        </div>
+        <div class="flex items-center gap-1.5 flex-wrap justify-center" id="dict-pagination">
+          <!-- Tombol Paginasi Dirender via JS -->
+        </div>
       </div>
     </section>
 
@@ -984,6 +1000,7 @@
   <!-- ========================================================= -->
   <!-- JAVASCRIPT: DATABASE KOSAKATA, AUDIO TTS, LOGIKA INTERAKTIF -->
   <!-- ========================================================= -->
+  <script src="js/dictionary-data.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
